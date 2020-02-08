@@ -11,4 +11,4 @@ Make sure you don't run an ancient [NodeJS](https://nodejs.org/) version and upg
 
 # Credits
 
-- [w3schools.com](https://www.w3schools.com/) for [How To Create a Tree View](https://www.w3schools.com/howto/howto_js_treeview.asp) - [index.js L266](index.js#L266)
+- [w3schools.com](https://www.w3schools.com/) for [How To Create a Tree View](https://www.w3schools.com/howto/howto_js_treeview.asp) - [index.js L306](index.js#L306)
