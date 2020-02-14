@@ -18,6 +18,7 @@ Make sure you don't run an ancient [NodeJS](https://nodejs.org/) version and upg
 - `--local` Skip downloading of `items_game.txt`, `gamemodes.txt` and translation files and use local files instead
   - Parser will look for the listed files above in a folder called `local`
   - Parser will look for all config files (From `csgo/maps/cfg`) in a folder called `cfg`
+  - Note: Regardless of language defined there should always be a fallback `csgo_english.txt` available
 
 # Credits
 
