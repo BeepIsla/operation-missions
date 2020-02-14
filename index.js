@@ -8,6 +8,7 @@ const Download = require("./helpers/Download.js");
 
 let urls = {
 	itemsGame: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt",
+	translation: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/resource/" + (Helper.commandLine.get("--language") || "csgo_english.txt"),
 	english: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/resource/csgo_english.txt",
 	gamemodes: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/gamemodes.txt"
 };
@@ -20,22 +21,31 @@ function customParser(data) {
 }
 
 (async () => {
-	if (!fs.existsSync("cfg")) {
-		fs.mkdirSync("cfg");
+	if (Helper.commandLine.includes("--local")) {
+		await Promise.all(Object.keys(urls).map((key) => {
+			let fileName = urls[key].split("/").pop();
+			return Cache.GetFileLocal(key, fileName, 60 * 60 * 1000, key === "gamemodes" ? customParser : VDF.parse, [false]);
+		}));
+	} else {
+		if (!fs.existsSync("cfg")) {
+			fs.mkdirSync("cfg");
+		}
+
+		console.log("Fetching files...");
+
+		// Fetch files
+		await Promise.all(Object.keys(urls).map((key) => {
+			return Cache.GetFile(urls[key], key, 60 * 60 * 1000, key === "gamemodes" ? customParser : VDF.parse, [false]);
+		}));
+
+		await Download.Delete();
+		await Download.Get();
 	}
-
-	console.log("Fetching files...");
-
-	// Fetch files
-	await Promise.all(Object.keys(urls).map((key) => {
-		return Cache.GetFile(urls[key], key, 60 * 60 * 1000, key === "gamemodes" ? customParser : VDF.parse, [false]);
-	}));
-	await Download.Delete();
-	await Download.Get();
 
 	console.log("Building...");
 
 	let itemsGame = await Cache.GetFile("itemsGame");
+	let translation = await Cache.GetFile("translation");
 	let english = await Cache.GetFile("english");
 	let gamemodes = await Cache.GetFile("gamemodes");
 
@@ -47,9 +57,11 @@ function customParser(data) {
 	let maptypes = gamemodes["GameModes.txt"].maptypes;
 
 	// Force translation tokens to be lowercase
-	for (let key in english.lang.Tokens) {
-		translationTokens[key.toLowerCase()] = english.lang.Tokens[key];
+	for (let key in translation.lang.Tokens) {
+		translationTokens[key.toLowerCase()] = translation.lang.Tokens[key];
 	}
+
+	Helper.SetEnglishFallback(english);
 
 	// Get weekly cards
 	let cards = operation.quest_mission_card.map((card) => {
@@ -340,10 +352,8 @@ function customParser(data) {
 
 		"		<script>",
 		"			document.addEventListener(\"DOMContentLoaded\", () => {",
-		"				var toggler = document.getElementsByClassName(\"caret\");",
-		"				var i;",
-		"				",
-		"				for (i = 0; i < toggler.length; i++) {",
+		"				let toggler = document.getElementsByClassName(\"caret\");",
+		"				for (let i = 0; i < toggler.length; i++) {",
 		"					toggler[i].addEventListener(\"click\", function () {",
 		"						this.parentElement.querySelector(\".nested\").classList.toggle(\"active\");",
 		"						this.classList.toggle(\"caret-down\");",

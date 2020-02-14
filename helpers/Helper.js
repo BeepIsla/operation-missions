@@ -1,4 +1,5 @@
 const request = require("request");
+let english = undefined;
 
 module.exports = class Helper {
 	static GetURL(url) {
@@ -14,6 +15,14 @@ module.exports = class Helper {
 		});
 	}
 
+	static SetEnglishFallback(translation) {
+		let translationTokens = {};
+		for (let key in translation.lang.Tokens) {
+			translationTokens[key.toLowerCase()] = translation.lang.Tokens[key];
+		}
+		english = translationTokens;
+	}
+
 	static GetTranslation(language, token, attribs = {}) {
 		token = token.toString().toLowerCase();
 
@@ -22,6 +31,10 @@ module.exports = class Helper {
 		}
 
 		let translation = language[token];
+		if (!translation && english) {
+			translation = english[token];
+		}
+
 		if (!attribs || Object.keys(attribs).length <= 0) {
 			return translation;
 		}
@@ -32,5 +45,19 @@ module.exports = class Helper {
 		}
 
 		return translation;
+	}
+
+	static commandLine = {
+		includes(arg) {
+			return process.argv.join(" ").toLowerCase().includes(arg.toLowerCase());
+		},
+		get(arg) {
+			let index = process.argv.map(a => a.toLowerCase()).indexOf(arg.toLowerCase());
+			if (index <= -1) {
+				return undefined;
+			}
+
+			return process.argv[index + 1];
+		}
 	}
 }
