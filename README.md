@@ -1,6 +1,6 @@
 # Operation Missions
 
-This is a parser for the upcoming operation missions which are yet to be revealed but are available in the game files.
+This is a parser for the ~~upcoming operation missions which are yet to be revealed but are available in the game files~~ Operation Shattered Web missions, it used to reveal missions which were not yet available but already in the game files.
 
 **Available at [beepisla.github.io/operation-missions](https://beepisla.github.io/operation-missions)**
 
