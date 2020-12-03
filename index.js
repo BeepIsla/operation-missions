@@ -49,7 +49,7 @@ function customParser(data) {
 	let english = await Cache.GetFile("english");
 	let gamemodes = await Cache.GetFile("gamemodes");
 
-	let operation = itemsGame.items_game.seasonaloperations["8"];
+	let operation = itemsGame.items_game.seasonaloperations.find(o => o["9"])["9"];
 	let questDefinitions = itemsGame.items_game.quest_definitions;
 	let translationTokens = {};
 	let mapgroups = gamemodes["GameModes.txt"].mapgroups;
@@ -189,7 +189,12 @@ function customParser(data) {
 											}
 
 											let prefab = prefabs[rawWeapon.toLowerCase() + "_prefab"];
-											rawWeapon = prefab.item_name;
+											if (prefab) {
+												rawWeapon = prefab.item_name;
+											} else {
+												// Scuffed?
+												rawWeapon = "quest_LoadoutSlot_" + rawWeapon.toLowerCase().replace("weapon_", "");
+											}
 										} else {
 											let prefab = itemsGame.items_game.prefabs[rawWeapon.toLowerCase() + "_prefab"];
 											rawWeapon = prefab.item_name;
