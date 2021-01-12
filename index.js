@@ -117,7 +117,7 @@ function customParser(data) {
 
 		let cardName = Helper.GetTranslation(translationTokens, card.name);
 
-		$("#hierarchy").append(cheerio.parseHTML("<li><span class=\"caret\">Week " + (i + 1) + ": " + cardName + "</span></li>"));
+		$("#hierarchy").append(cheerio.parseHTML("<li><span class=\"caret\">Week " + (i + 1) + ": " + cardName + " <i data-week=\"" + i + "\"></i></span></li>"));
 		$("#hierarchy > li").last().append(cheerio.parseHTML("<ul class=\"nested\"></ul>"));
 
 		if (card.quests === "locked") {
@@ -366,6 +366,58 @@ function customParser(data) {
 		"				}",
 		"			}, false);",
 		"		</script>",
+
+		"		<script>",
+		"			let opStart = new Date(1606857300000);",
+		"			let weekTime = 7 * 24 * 60 * 60 * 1000;",
+		"			function formatTime(diff) {",
+		"				let delta = Math.round(Math.abs(diff) / 1000);",
+		"				let days = Math.floor(delta / (24 * 60 * 60));",
+		"				delta -= days * (24 * 60 * 60);",
+		"				let hours = Math.floor(delta / (60 * 60)) % 24;",
+		"				delta -= hours * (60 * 60);",
+		"				let minutes = Math.floor(delta / 60) % 60;",
+		"				delta -= minutes * 60;",
+		"				let seconds = delta % 60;",
+		"				if (days >= 7) {",
+		"					return days + \" day\" + (days === 1 ? \"\" : \"s\")",
+		"				} else if (days > 0) {",
+		"					return (days + \" day\" + (days === 1 ? \"\" : \"s\")) + \" \" + [",
+		"						hours < 10 ? (\"0\" + hours) : hours,",
+		"						minutes < 10 ? (\"0\" + minutes) : minutes,",
+		"						(seconds < 10 ? (\"0\" + seconds) : seconds) + \" hour\" + (hours === 1 ? \"\" : \"s\")",
+		"					].join(\":\");",
+		"				} else if (hours > 0) {",
+		"					return [",
+		"						hours < 10 ? (\"0\" + hours) : hours,",
+		"						minutes < 10 ? (\"0\" + minutes) : minutes,",
+		"						(seconds < 10 ? (\"0\" + seconds) : seconds) + \" hour\" + (hours === 1 ? \"\" : \"s\")",
+		"					].join(\":\");",
+		"				} else if (minutes > 0) {",
+		"					return [",
+		"						minutes < 10 ? (\"0\" + minutes) : minutes,",
+		"						(seconds < 10 ? (\"0\" + seconds) : seconds) + \" minute\" + (minutes === 1 ? \"\" : \"s\")",
+		"					].join(\":\");",
+		"				} else if (seconds > 0) {",
+		"					return [",
+		"						(seconds < 10 ? (\"0\" + seconds) : seconds) + \" second\" + (seconds === 1 ? \"\" : \"s\")",
+		"					].join(\":\");",
+		"				}",
+		"			}",
+		"			setInterval(() => {",
+		"				for (let el of document.querySelectorAll(\"li > span > i\")) {",
+		"					let idx = parseInt(el.attributes.getNamedItem(\"data-week\").value);",
+		"					let weekDate = new Date(opStart.getTime() + (idx * weekTime));",
+		"					if (Date.now() > weekDate.getTime()) {",
+		"						el.innerHTML = \"\";",
+		"					} else {",
+		"						let diff = weekDate.getTime() - Date.now();",
+		"						el.innerHTML = \"in \" + formatTime(diff);",
+		"					}",
+		"				}",
+		"			}, 500);",
+		"		</script>",
+
 		"	</head>",
 
 		"	<body>",
