@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
+    "cheerio": "^1.0.0-rc.5",
     "request": "^2.88.2",
     "vdf-parser": "^1.1.0"
   },
