@@ -317,7 +317,7 @@ function customParser(data) {
 
 	let html = $("#hierarchy").parent().html();
 	let additions = [
-		"<html lang=\"en"\>",
+		"<html lang=\"en\">",
 
 		"	<head>",
 		"		<style>",
