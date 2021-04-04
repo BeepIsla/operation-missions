@@ -426,7 +426,11 @@ function customParser(data) {
 
 		"</html>"
 	];
-	fs.writeFileSync("index.html", additions.join("\n"));
+
+	if (!fs.existsSync("out")) {
+		fs.mkdirSync("out");
+	}
+	fs.writeFileSync("./out/index.html", additions.join("\n"));
 
 	console.log("Done!");
 })();
