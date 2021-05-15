@@ -6,6 +6,10 @@ const Cache = require("./helpers/Cache.js");
 const Helper = require("./helpers/Helper.js");
 const Download = require("./helpers/Download.js");
 
+// Easy to change for future operations
+const OPERATION_INDEX = "9";
+const OPERATION_START = 1606857300000;
+
 let urls = {
 	itemsGame: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt",
 	translation: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/resource/" + (Helper.commandLine.get("--language") || "csgo_english.txt"),
@@ -49,7 +53,7 @@ function customParser(data) {
 	let english = await Cache.GetFile("english");
 	let gamemodes = await Cache.GetFile("gamemodes");
 
-	let operation = itemsGame.items_game.seasonaloperations.find(o => o["9"])["9"];
+	let operation = itemsGame.items_game.seasonaloperations.find(o => o[OPERATION_INDEX])[OPERATION_INDEX];
 	let questDefinitions = itemsGame.items_game.quest_definitions;
 	let translationTokens = {};
 	let mapgroups = gamemodes["GameModes.txt"].mapgroups;
@@ -368,7 +372,7 @@ function customParser(data) {
 		"		</script>",
 
 		"		<script>",
-		"			let opStart = new Date(1606857300000);",
+		"			let opStart = new Date(" + OPERATION_START + ");",
 		"			let weekTime = 7 * 24 * 60 * 60 * 1000;",
 		"			function formatTime(diff) {",
 		"				let delta = Math.round(Math.abs(diff) / 1000);",
