@@ -1,6 +1,6 @@
 # Operation Missions
 
-This is a parser for the upcoming operation missions which are yet to be revealed but are available in the game files for Operation Broken Fang.
+This is a parser for the upcoming operation missions which are yet to be revealed but are available in the game files for Operation Broken Fang. Every time a new CSGO update is released [a workflow](https://github.com/BeepIsla/operation-missions/actions) will run automatically and the website linked below will update with the latest data.
 
 **Available at [beepisla.github.io/operation-missions](https://beepisla.github.io/operation-missions)**
 
