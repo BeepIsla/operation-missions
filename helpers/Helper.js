@@ -24,6 +24,9 @@ module.exports = class Helper {
 	}
 
 	static GetTranslation(language, token, attribs = {}) {
+		if (!token) {
+			return "";
+		}
 		token = token.toString().toLowerCase();
 
 		if (token.startsWith("#")) {

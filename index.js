@@ -7,8 +7,8 @@ const Helper = require("./helpers/Helper.js");
 const Download = require("./helpers/Download.js");
 
 // Easy to change for future operations
-const OPERATION_INDEX = "9";
-const OPERATION_START = 1606857300000;
+const OPERATION_INDEX = "10";
+const OPERATION_START = 1632254400000;
 
 let urls = {
 	itemsGame: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt",
@@ -112,6 +112,7 @@ function customParser(data) {
 		});
 	}
 	console.log(cards);
+	console.log(cards[0].quests);
 
 	// Parse cards to look pretty for HTML
 	const $ = cheerio.load("<ul id=\"hierarchy\"></ul>");
