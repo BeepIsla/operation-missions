@@ -8,6 +8,7 @@ import Card from "./components/Card.js";
 
 // Easy to change for future operations
 const OPERATION_INDEX = "10";
+const OPERATION_NAME = "Operation Riptide";
 const OPERATION_START = 1632254400000;
 
 let urls = {
@@ -57,6 +58,8 @@ const cards = operation.quest_mission_card.map((c, i) => new Card(translation, c
 const HTML = [
 	"<head>",
 	"	<style>",
+	"		@import url(\"https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
+	"",
 	"		ul, #hierarchy {",
 	"			list-style-type: none;",
 	"		}",
@@ -73,7 +76,7 @@ const HTML = [
 	"",
 	"		.caret::before {",
 	"			content: \"\\25B6\";",
-	"			color: black;",
+	"			color: #C8821A;",
 	"			display: inline-block;",
 	"			margin-right: 6px;",
 	"		}",
@@ -95,11 +98,17 @@ const HTML = [
 	"		}",
 	"",
 	"		table {",
-	"			border: 1px solid black;",
+	"			border: 1px solid rgb(100, 100, 100);",
 	"		}",
 	"",
 	"		tbody > tr:nth-child(even) {",
-	"			background-color: #969696;",
+	"			background-color: #1B1B3A;",
+	"		}",
+	"",
+	"		body {",
+	"			background-color: #0B0E13;",
+	"			color: #FFFFFF;",
+	"			font-family: \"Noto Sans Display\";",
 	"		}",
 	"	</style>",
 	"",
@@ -166,6 +175,10 @@ const HTML = [
 	"</head>",
 	"",
 	"<body>",
+	`	<h1 style="color:#C8821A">All available CSGO ${OPERATION_NAME} missions</h1>`,
+	"	<span>Created by <a style=\"color:#C8821A; font-size: 115%;\" target=\"_blank\" href=\"https://github.com/BeepIsla/operation-missions\">BeepIsla</a>. Parsed out of the game files.</span>",
+	"	<br><br>",
+	"",
 	"	<ul id=\"hierarchy\">"
 ];
 for (let card of cards) {

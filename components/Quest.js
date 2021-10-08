@@ -78,7 +78,7 @@ export default class Quest {
 		if (this.quest.points.includes(",")) {
 			// You get "operational_points" per this many points reached
 			let parts = this.quest.points.split(",").sort();
-			return `${this.quest.operational_points}x ★ for ${parts.reduce((prev, cur, index) => {
+			return `${this.quest.operational_points}x <span style="color: #C8821A;">★</span> for ${parts.reduce((prev, cur, index) => {
 				if (index === 0) {
 					return cur;
 				} else if ((index + 1) >= parts.length) {
@@ -90,7 +90,7 @@ export default class Quest {
 		} else {
 			// You get "operational_points" once all points have been reached
 			// Eg: 50 kills (Points), 1 match win (Points)
-			return new Array(parseInt(this.quest.operational_points)).fill("★").join(" ");
+			return `<span style="color: #C8821A;">${new Array(parseInt(this.quest.operational_points)).fill("★").join(" ")}</span>`;
 		}
 	}
 

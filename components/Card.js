@@ -28,7 +28,7 @@ export default class Card {
 	}
 
 	GetName() {
-		return `Week ${this.weekIndex}: ${this.loc.Get(this.name)} <i class="week-time-tracker" data-time="${this.start.getTime()}"></i>`;
+		return `Week ${this.weekIndex}: ${this.loc.Get(this.name)} <i class="week-time-tracker" data-time="${this.start.getTime()}" style="color:#B3B3B3" ></i>`;
 	}
 
 	ToTable() {
@@ -54,7 +54,7 @@ export default class Card {
 				"	</thead>",
 				"",
 				"	<tbody>",
-				"		<td colspan=\"5\">Quests Unavailable</td>",
+				"		<td colspan=\"5\" style=\"color:#FDAAAA\">Quests Unavailable</td>",
 				"	</tbody>",
 				"</table>"
 			].join("\n");
