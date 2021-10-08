@@ -113,6 +113,7 @@ const HTML = [
 	"",
 	"		table {",
 	"			border: 1px solid rgb(100, 100, 100);",
+	"			width: 100%;",
 	"		}",
 	"",
 	"		tbody > tr:nth-child(even) {",
