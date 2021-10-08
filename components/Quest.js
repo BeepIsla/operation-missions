@@ -82,7 +82,12 @@ export default class Quest {
 				if (index === 0) {
 					return cur;
 				} else if ((index + 1) >= parts.length) {
-					return prev + ", and " + cur + " objectives completed";
+					if (index === 1) {
+						// There are only two options, so don't include a comma
+						return prev + " and " + cur + " objectives completed";
+					} else {
+						return prev + ", and " + cur + " objectives completed";
+					}
 				} else {
 					return prev + ", " + cur;
 				}
