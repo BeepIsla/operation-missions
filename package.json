@@ -1,18 +1,21 @@
 {
   "name": "operation-missions",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.5",
-    "request": "^2.88.2",
+    "got": "^11.8.2",
     "vdf-parser": "^1.1.0"
   },
-  "devDependencies": {},
   "scripts": {
     "build": "node index.js"
   },
   "keywords": [],
   "author": "BeepIsla",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0"
+  }
 }
