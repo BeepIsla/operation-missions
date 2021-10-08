@@ -1,15 +1,9 @@
 import * as fs from "fs/promises";
-import got from "got";
 import VDF from "vdf-parser";
 import CommandLine from "./helpers/CommandLine.js";
 import Cache from "./helpers/Cache.js";
 import Translation from "./helpers/Translation.js";
 import Card from "./components/Card.js";
-
-// Easy to change for future operations
-const OPERATION_INDEX = "10";
-const OPERATION_NAME = "Operation Riptide";
-const OPERATION_START = 1632254400000;
 
 let urls = {
 	itemsGame: "https://raw.githubusercontent.com/SteamDatabase/GameTracking-CSGO/master/csgo/scripts/items/items_game.txt",
@@ -52,11 +46,31 @@ console.log("Building...");
 const itemsGame = Cache.GetFileNoFetch("itemsGame");
 const translation = new Translation(Cache.GetFileNoFetch("translation"), Cache.GetFileNoFetch("english"));
 
-const operation = itemsGame.items_game.seasonaloperations.find(o => o[OPERATION_INDEX])[OPERATION_INDEX];
-const cards = operation.quest_mission_card.map((c, i) => new Card(translation, c, OPERATION_START + ((7 * 24 * 60 * 60 * 1000) * i), i + 1));
+// Get the current operation
+let operationIndex = 0;
+for (let ops of itemsGame.items_game.seasonaloperations) {
+	operationIndex = Math.max(Object.keys(ops).reduce((prev, cur) => {
+		cur = parseInt(cur);
+		return Math.max(prev, cur);
+	}, 0), operationIndex);
+}
+let operationStart = itemsGame.items_game.quest_schedule.start * 1000;
+let operationName = `Operation ${translation.Get(`op${operationIndex + 1}_name`)}`;
+
+const operation = itemsGame.items_game.seasonaloperations.find(o => o[operationIndex])[operationIndex];
+const cards = operation.quest_mission_card.map((c, i) => new Card(translation, c, operationStart + ((7 * 24 * 60 * 60 * 1000) * i), i + 1));
+const xpRewardsList = operation.xp_reward.find(x => /^(\d+(,|$))+$/.test(x)).split(",");
 
 const HTML = [
 	"<head>",
+	`	<title>CSGO ${operationName} Missions</title>`,
+	"	<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\" />",
+	"	<meta content=\"CS:GO Mission Tracker | by BeepIsla\" property=\"og:title\" />",
+	`	<meta content="Check out the new ${operationName} missions before everyone else thanks to this handy tracker!" property="og:description" />`,
+	"	<meta content=\"logo.png\" property=\"og:image\" />",
+	"	<meta content=\"#E0B04C\" data-react-helmet=\"true\" name=\"theme-color\" />",
+	"	<meta name=\"twitter:card\" content=\"summary_large_image\">",
+	"",
 	"	<style>",
 	"		@import url(\"https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
 	"",
@@ -175,8 +189,8 @@ const HTML = [
 	"</head>",
 	"",
 	"<body>",
-	`	<h1 style="color:#C8821A">All available CSGO ${OPERATION_NAME} missions</h1>`,
-	"	<span>Created by <a style=\"color:#C8821A; font-size: 115%;\" target=\"_blank\" href=\"https://github.com/BeepIsla/operation-missions\">BeepIsla</a>. Parsed out of the game files.</span>",
+	`	<h1 style="color:#C8821A">All available CSGO ${operationName} missions</h1>`,
+	`	<span>Created by <a style="color:#C8821A; font-size: 115%;" target="_blank" href="https://github.com/BeepIsla/operation-missions">BeepIsla</a>. Gain a total of ${xpRewardsList.length} XP boosts by playing them!</span>`,
 	"	<br><br>",
 	"",
 	"	<ul id=\"hierarchy\">"
@@ -206,3 +220,5 @@ await fs.rm("out", {
 });
 await fs.mkdir("out");
 await fs.writeFile("out/index.html", HTML.join("\n"));
+await fs.copyFile("logo.png", "out/logo.png");
+await fs.copyFile("favicon.png", "out/favicon.png");
