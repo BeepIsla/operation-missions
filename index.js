@@ -67,7 +67,7 @@ const HTML = [
 	"	<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\" />",
 	"	<meta content=\"CS:GO Mission Tracker | by BeepIsla\" property=\"og:title\" />",
 	`	<meta content="Check out the new ${operationName} missions before everyone else thanks to this handy tracker!" property="og:description" />`,
-	"	<meta content=\"logo.png\" property=\"og:image\" />",
+	"	<meta content=\"https://beepisla.github.io/operation-missions/logo.png\" property=\"og:image\" />",
 	"	<meta content=\"#E0B04C\" data-react-helmet=\"true\" name=\"theme-color\" />",
 	"	<meta name=\"twitter:card\" content=\"summary_large_image\">",
 	"",
