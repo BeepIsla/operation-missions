@@ -126,7 +126,6 @@ const HTML = [
 	"",
 	"		th {",
 	"			background-color: #1B1B3A;",
-	"			color: #C8821A;",
 	"		}",
 	"",
 	"		body {",
