@@ -77,7 +77,9 @@ export default class Quest {
 	GetRewardText() {
 		if (this.quest.points.includes(",")) {
 			// You get "operational_points" per this many points reached
-			let parts = this.quest.points.split(",").sort();
+			let parts = this.quest.points.split(",").sort((a, b) => {
+				return parseInt(a) - parseInt(b);
+			});
 			return `${this.quest.operational_points}x <span style="color: #C8821A;">★</span> for ${parts.reduce((prev, cur, index) => {
 				if (index === 0) {
 					return cur;
