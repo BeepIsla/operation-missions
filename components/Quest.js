@@ -58,6 +58,29 @@ export default class Quest {
 		throw new Error("Failed to get mode");
 	}
 
+	GetMap() {
+		let gameModes = Cache.GetFileNoFetch("gamemodes")["GameModes.txt"];
+		if (this.quest.mapgroup) {
+			let mapgroup = gameModes.mapgroups[this.quest.mapgroup];
+			if (!mapgroup) {
+				throw new Error("Failed to get mapgroup");
+			}
+
+			return this.loc.Get(mapgroup.nameID);
+		}
+
+		if (this.quest.map) {
+			let map = gameModes.maps[this.quest.map];
+			if (!map) {
+				throw new Error("Failed to get map");
+			}
+
+			return this.loc.Get(map.nameID);
+		}
+
+		return "";
+	}
+
 	GetDescription() {
 		if (this.type === QuestType.EitherOrMission) {
 			// Put these as description
@@ -134,7 +157,7 @@ export default class Quest {
 		return [
 			"<tr>",
 			`	<td>${this.GetName()}</td>`,
-			`	<td>${this.GetMode()}</td>`,
+			`	<td>${this.GetMode()}${this.GetMap() ? (`: ${this.GetMap()}`) : ""}</td>`,
 			`	<td>${this.GetDescription()}</td>`,
 			`	<td>${this.GetRewardText()}</td>`,
 			`	<td>${this.GetDetails()}</td>`,
