@@ -157,7 +157,7 @@ export default class Quest {
 		return [
 			"<tr>",
 			`	<td>${this.GetName()}</td>`,
-			`	<td>${this.GetMode()}${this.GetMap() ? (`: ${this.GetMap()}`) : ""}</td>`,
+			`	<td>${this.GetMode()}${this.GetMap() ? `: ${this.GetMap()}` : ""}</td>`,
 			`	<td>${this.GetDescription()}</td>`,
 			`	<td>${this.GetRewardText()}</td>`,
 			`	<td>${this.GetDetails()}</td>`,
