@@ -47,7 +47,26 @@ export default class Quest {
 		return parts.pop().trim();
 	}
 
+	IsSkirmish() {
+		let gameModes = Cache.GetFileNoFetch("gamemodes")["GameModes.txt"];
+		if (this.quest.mapgroup) {
+			let mapgroup = gameModes.mapgroups[this.quest.mapgroup];
+			if (!mapgroup) {
+				throw new Error("Failed to get mapgroup");
+			}
+
+			return mapgroup.icon_image_path === "map_icons/mapgroup_icon_skirmish";
+		}
+
+		// Singular maps are never Skirmish
+		return false;
+	}
+
 	GetMode() {
+		if (this.IsSkirmish()) {
+			return this.loc.Get("SFUI_GameModeSkirmish");
+		}
+
 		let gameModes = Cache.GetFileNoFetch("gamemodes")["GameModes.txt"];
 		for (let type in gameModes.gameTypes) {
 			if (gameModes.gameTypes[type].gameModes[this.quest.gamemode]) {
