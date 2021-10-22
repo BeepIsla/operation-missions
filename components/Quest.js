@@ -161,12 +161,13 @@ export default class Quest {
 		// Maybe try and detect this automatically?
 		let prefixes = [
 			"Get a kill from",
-			"Apply graffiti at",
+			"Apply graffiti (at|on|in) (the|)",
 			"Get a streak of"
 		];
 		for (let prefix of prefixes) {
 			for (let i = 0; i < subMissionGoals.length; i++) {
-				subMissionGoals[i] = subMissionGoals[i].replace(new RegExp(`^${prefix}`), "");
+				subMissionGoals[i] = subMissionGoals[i].replace(new RegExp(`^${prefix}`, "i"), "").trim();
+				subMissionGoals[i] = `${subMissionGoals[i][0].toUpperCase()}${subMissionGoals[i].slice(1)}`;
 			}
 		}
 		return subMissionGoals.join(joinString[this.type]);
