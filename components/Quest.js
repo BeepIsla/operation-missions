@@ -162,7 +162,8 @@ export default class Quest {
 		let prefixes = [
 			"Get a kill from",
 			"Apply graffiti (at|on|in) (the|)",
-			"Get a streak of"
+			"Get a streak of",
+			"Get a kill at"
 		];
 		for (let prefix of prefixes) {
 			for (let i = 0; i < subMissionGoals.length; i++) {
