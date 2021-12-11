@@ -163,7 +163,8 @@ export default class Quest {
 			"Get a kill from",
 			"Apply graffiti (at|on|in) (the|)",
 			"Get a streak of",
-			"Get a kill at"
+			"Get a kill at",
+			"Spray graffiti (at|on|in) (the|)"
 		];
 		for (let prefix of prefixes) {
 			for (let i = 0; i < subMissionGoals.length; i++) {
