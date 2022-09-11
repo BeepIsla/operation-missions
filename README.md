@@ -7,7 +7,7 @@ This is a parser for the upcoming operation missions which are yet to be reveale
 # Build
 
 To build the `index.html` yourself simply open a command prompt and run `npm ci`, once finished run `node index.js`.
-Make sure you don't run an ancient [NodeJS](https://nodejs.org/) version and upgrade regularly.
+Make sure you don't run an ancient [NodeJS](https://nodejs.org/) version and upgrade regularly. Last tested using v18.7.0.
 
 ## Optional command line arguments
 

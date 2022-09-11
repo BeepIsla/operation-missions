@@ -1,6 +1,5 @@
-import * as fs from "fs/promises";
+import { promises as fs } from "fs";
 import * as path from "path";
-import got from "got";
 
 export default class Cache {
 	static files = {};
@@ -48,10 +47,7 @@ export default class Cache {
 		Cache.fetchInProgress.push(name);
 
 		try {
-			let content = await got({
-				url: url,
-				resolveBodyOnly: true
-			});
+			let content = await fetch(url).then(r => r.text());
 			Cache.files[name] = typeof parser === "function" ? await parser(content, extraArg) : content;
 			Cache.urls[name] = url;
 			return Cache.files[name];
